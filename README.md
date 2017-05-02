@@ -1,10 +1,10 @@
 # Graphrec
 
-##Description
+## Description
 Mobile app that recognizes functions by using ML-tech. on photos of graphs
 
-##Architecture
+## Architecture
 
-##How to build and use
+## How to build and use
 
-##Testing
+## Testing
