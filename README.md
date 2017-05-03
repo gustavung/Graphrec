@@ -15,5 +15,22 @@ The last component would be a method on the server that trains the neural networ
 ## Architecture
 
 ## How to build and use
+### Android application
+### Server
+Install Flask
+```bash
+pip install Flask
+```
 
 ## Testing
+### Overall 
+Our overall testing strategy is to quickly deploy a minimum viable product, MVP, where we have integration of at least the server component and the mobile app component from the start. We want to integrate the whole system early to make sure all parts actually functions together, thus making the detection of system wide bugs, caused by changes to a single component, easy.
+### Components
+Testing of the individual components are tailored to suit those specific elements and their functionality.
+#### Android application
+To be decided.
+#### Server
+We are going to use Flask's testing convention and python unit tests.
+#### Neural network
+To be decided.
+
