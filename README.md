@@ -17,6 +17,8 @@ The last component would be a method on the server that trains the neural networ
 ## How to build and use
 ### Android application
 ### Server
+We are using python 3 and the Flask web framework.
+
 Install Flask
 ```bash
 pip install Flask
@@ -30,7 +32,7 @@ Testing of the individual components are tailored to suit those specific element
 #### Android application
 To be decided.
 #### Server
-We are going to use Flask's testing convention and python unit tests.
+We are going to use [Flask's testing convention](http://flask.pocoo.org/docs/0.12/testing/) and python unit tests.
 #### Neural network
 To be decided.
 
