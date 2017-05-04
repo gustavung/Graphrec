@@ -1,4 +1,7 @@
+<<<<<<< 291a1aa7bdfee66b764049f7981987e0ce1eb011
 <<<<<<< 1b527569bc30033f9353b088da51634a20099492
+=======
+>>>>>>> Added upload function and dummy evaluation
 import os, random
 from flask import Flask, request
 from werkzeug.utils import secure_filename
@@ -26,7 +29,7 @@ def upload_image():
 		f = request.files['file']
 		filename = secure_filename(f.filename)
 		extension = '.' + filename.rsplit('.', 1)[1].lower()
-		if extension[1:] not in ALLOWED_EXTENSIONS:
+		if extension not in ALLOWED_EXTENSIONS:
 			response = "File extension %s not allowed" % extension
 			return response
 		full_path = os.path.join(app.config['UPLOAD_FOLDER'], app.config['IMAGE_NAME'] + extension)
