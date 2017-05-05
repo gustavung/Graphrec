@@ -45,8 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private Bitmap getBitmapFromUri(Uri uri) {
         Bitmap bitmap = null;
         try {
-            FileInputStream stream = new FileInputStream(uri.getPath());
-            bitmap = BitmapFactory.decodeStream(stream);
+            bitmap = BitmapFactory.decodeStream(new FileInputStream(uri.getPath()));
         } catch (FileNotFoundException e) {
             Log.d(TAG, "Error trying to open temp file " + e.getMessage());
         }
