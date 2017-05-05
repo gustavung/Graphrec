@@ -1,0 +1,66 @@
+package com.app.graphrec.graphrec;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.hardware.Camera;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.FrameLayout;
+
+import static android.content.ContentValues.TAG;
+
+
+/**
+ * A custom camera activity using the old and deprecated camera API.
+ * Should be rewritten for the new API if we target newer (android 5+, API 21+)
+ * phones exclusively.
+ */
+
+public class CameraActivity extends Activity {
+
+    private Camera cam;
+    private CameraPreview camPreview;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_camera);
+
+        // get the camera and relay it to the preview service
+        cam = getCameraInstance();
+        camPreview = new CameraPreview(this, cam);
+        FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
+        preview.addView(camPreview);
+
+    }
+
+    public static Camera getCameraInstance() {
+        Camera camera = null;
+        try {
+            camera = Camera.open();
+        } catch (Exception e) {
+            Log.d(TAG, "Error getting the camera object: " + e.getMessage());
+        }
+        return camera;
+    }
+
+    public void invokeTakePicture(View view) {
+        cam.takePicture(null, null, pictureCallback);
+    }
+
+    private Camera.PictureCallback pictureCallback = new Camera.PictureCallback() {
+
+        @Override
+        public void onPictureTaken(byte[] data, Camera camera) {
+            Intent intent = new Intent();
+            // May be a bad approach since it is possible for it to crash
+            // when transferring large images.
+            intent.putExtra("picture", data);
+            setResult(RESULT_OK, intent);
+            camera.release();
+            finish();
+        }
+    };
+
+}

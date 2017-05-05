@@ -14,7 +14,7 @@ import java.net.URL;
  *
  */
 
-public class ImageDownloadTask extends AsyncTask<URL, Integer, Long> {
+public class ImageUploadTask extends AsyncTask<URL, Integer, Long> {
 
         protected Long doInBackground(URL... urls) {
             sendRequest();
