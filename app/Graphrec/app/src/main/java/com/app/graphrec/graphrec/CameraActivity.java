@@ -8,6 +8,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import static android.content.ContentValues.TAG;
 
 
@@ -56,11 +61,32 @@ public class CameraActivity extends Activity {
             Intent intent = new Intent();
             // May be a bad approach since it is possible for it to crash
             // when transferring large images.
-            intent.putExtra("picture", data);
+            File image = createImageFile(data);
+            intent.putExtra("picture", image.toURI().toString());
             setResult(RESULT_OK, intent);
             camera.release();
             finish();
         }
     };
 
+    private File createImageFile(byte[] data) {
+
+        // Right now we create a secret temp file to transfer img to main activity
+        // can this be done in a better way?
+        File tempFile = new File(getExternalFilesDir(null), "tempImg.jpg");
+
+        try {
+            FileOutputStream output = new FileOutputStream(tempFile.getAbsoluteFile());
+            output.write(data);
+            output.close();
+        } catch (FileNotFoundException e) {
+            Log.d(TAG, "Error while opening temp file");
+        } catch (IOException e) {
+            Log.d(TAG, "Error while writing to temp file");
+        }
+
+        return tempFile;
+    }
+
 }
+
