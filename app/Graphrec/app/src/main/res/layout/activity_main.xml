@@ -10,17 +10,24 @@
     <LinearLayout
         android:layout_width="368dp"
         android:layout_height="495dp"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="sendRequest"
-            android:text="Button" />
+            app:srcCompat="@mipmap/ic_launcher" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.26"
+            android:onClick="invokeCameraIntent"
+            android:text="ClickMe" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
