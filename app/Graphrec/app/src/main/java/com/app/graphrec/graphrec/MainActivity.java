@@ -11,9 +11,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+
 import static android.content.ContentValues.TAG;
 
 /**
@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
             Bitmap imageBitmap = getBitmapFromUri(imageUri);
             ImageView view = (ImageView) findViewById(R.id.imageView);
             view.setImageBitmap(imageBitmap);
+            sendRequest(imageUri);
         }
     }
 
@@ -50,11 +51,6 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "Error trying to open temp file " + e.getMessage());
         }
 
-        // cleanup
-        File tempfile = new File(uri.getPath());
-        if (!tempfile.delete()) {
-            Log.d(TAG, "Error trying to delete temp file ");
-        }
         return bitmap;
     }
 
@@ -63,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, CAMERA_ACTIVITY);
     }
 
-    public void sendRequest() {
-        new ImageUploadTask().execute();
+    public void sendRequest(Uri uri) {
+        new ImageUploadTask().execute(uri);
     }
 
 }

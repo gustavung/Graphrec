@@ -25,7 +25,7 @@ def upload_image():
 		f = request.files['file']
 		filename = secure_filename(f.filename)
 		extension = '.' + filename.rsplit('.', 1)[1].lower()
-		if extension not in ALLOWED_EXTENSIONS:
+		if extension[1:] not in ALLOWED_EXTENSIONS:
 			response = "File extension %s not allowed" % extension
 			return response
 		full_path = os.path.join(app.config['UPLOAD_FOLDER'], app.config['IMAGE_NAME'] + extension)
