@@ -73,7 +73,7 @@ public class CameraActivity extends Activity {
 
         // Right now we create a secret temp file to transfer img to main activity
         // can this be done in a better way?
-        File tempFile = new File(getExternalFilesDir(null), "tempImg.jpg");
+        File tempFile = new File(getExternalFilesDir(null), "tempImg.png");
 
         try {
             FileOutputStream output = new FileOutputStream(tempFile.getAbsoluteFile());

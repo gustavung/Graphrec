@@ -1,54 +1,62 @@
 package com.app.graphrec.graphrec;
 
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.util.Log;
 
-import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * A class which is used to send HTTP requests on a different thread.
  *
  */
 
-public class ImageUploadTask extends AsyncTask<URL, Integer, Long> {
+public class ImageUploadTask extends AsyncTask<Uri, Void, Void> {
 
-        protected Long doInBackground(URL... urls) {
-            sendRequest();
-            return Long.valueOf(0);
-        }
+    protected Void doInBackground(Uri ... uri) {
+        sendRequest(uri[0]);
+        return null;
+    }
 
-    private void sendRequest() {
-        InputStreamReader input = null;
+    private void sendRequest(Uri uri) {
+
+        File file = new File(uri.getPath());
+        OkHttpClient client = new OkHttpClient();
+
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("file", "picture.png",
+                        RequestBody.create(MediaType.parse("image/png"),
+                                file))
+                .build();
+
+        Request request = new Request.Builder()
+                .url("http://192.168.0.114:5000/upload")
+                .post(requestBody)
+                .build();
         try {
-            // we don't want to hardcode the server, find config file
-            URL url = new URL("http",  "192.168.0.114", R.integer.PORT, "/");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            try {
-                conn.setDoInput(true);
-
-                input = new InputStreamReader(conn.getInputStream());
-                readStream(input);
-            } finally {
-                conn.disconnect();
+            Response response = client.newCall(request).execute();
+            if (!response.isSuccessful()) {
+                throw new IOException("Unexpected code " + response);
             }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
+            System.out.println(response.body().string());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-    }
-
-
-    private void readStream(InputStreamReader stream) throws IOException {
-        BufferedReader reader = new BufferedReader(stream);
-        String output;
-        while ((output = reader.readLine()) != null) {
-            System.out.println(output);
+        // cleanup
+        if (!file.delete()) {
+            Log.d(TAG, "Error trying to delete temp file ");
         }
 
     }
