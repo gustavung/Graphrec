@@ -59,8 +59,6 @@ public class CameraActivity extends Activity {
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
             Intent intent = new Intent();
-            // May be a bad approach since it is possible for it to crash
-            // when transferring large images.
             File image = createImageFile(data);
             intent.putExtra("picture", image.toURI().toString());
             setResult(RESULT_OK, intent);
