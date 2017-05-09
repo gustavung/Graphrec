@@ -22,8 +22,13 @@ import static android.content.ContentValues.TAG;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Intent handles
     static final int CAMERA_ACTIVITY = 1;
 
+    /**
+     * Initialize activity, set up layout and UI.
+     * @param savedInstanceState If activity is re-initialized then this contains data it supplied to onSaveInstanceState, otherwise null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +36,12 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
+    /**
+     * This is fired when startActivityForResult(Intent, int) is done.
+     * @param requestCode Specifies who the result came from
+     * @param resultCode Specifies the status of its child activity through its setResult
+     * @param data An intent with returned data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -43,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Tries to extract a bitmap from a given Uri and returns null if an error occurred.
+     * @param uri The Uri to be opened
+     * @return The resulting bitmap
+     */
     private Bitmap getBitmapFromUri(Uri uri) {
         Bitmap bitmap = null;
         try {
@@ -54,11 +70,19 @@ public class MainActivity extends AppCompatActivity {
         return bitmap;
     }
 
+    /**
+     * Created a new camera activity and starts it.
+     * @param view THe current view
+     */
     public void invokeCameraIntent(View view) {
         Intent intent = new Intent(this, CameraActivity.class);
         startActivityForResult(intent, CAMERA_ACTIVITY);
     }
 
+    /**
+     * Sends a HTTP multiform request with payload etracted from Uri.
+     * @param uri The Uri to be used
+     */
     public void sendRequest(Uri uri) {
         new ImageUploadTask().execute(uri);
     }
