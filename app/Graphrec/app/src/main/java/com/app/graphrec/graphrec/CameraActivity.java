@@ -27,6 +27,10 @@ public class CameraActivity extends Activity {
     private Camera cam;
     private CameraPreview camPreview;
 
+    /**
+     * Initialize activity, set up layout and UI.
+     * @param savedInstanceState If activity is re-initialized then this contains data it supplied to onSaveInstanceState, otherwise null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +44,10 @@ public class CameraActivity extends Activity {
 
     }
 
+    /**
+     * Tries to create a new camera instance, will fail if denied by the android system
+     * @return The new camera instance
+     */
     public static Camera getCameraInstance() {
         Camera camera = null;
         try {
@@ -50,10 +58,17 @@ public class CameraActivity extends Activity {
         return camera;
     }
 
+    /**
+     * Takes a picture from the camera preview.
+     * @param view The current view
+     */
     public void invokeTakePicture(View view) {
         cam.takePicture(null, null, pictureCallback);
     }
 
+    /**
+     * Creates a new intent and a new temporary image file and return to the previous activity.
+     */
     private Camera.PictureCallback pictureCallback = new Camera.PictureCallback() {
 
         @Override
@@ -67,6 +82,11 @@ public class CameraActivity extends Activity {
         }
     };
 
+    /**
+     * Tries to create a new image file, which is stored in the private app storage, from a byte array.
+     * @param data the image in byte array form
+     * @return The newly created image, which might be empty
+     */
     private File createImageFile(byte[] data) {
 
         // Right now we create a secret temp file to transfer img to main activity

@@ -23,11 +23,20 @@ import static android.content.ContentValues.TAG;
 
 public class ImageUploadTask extends AsyncTask<Uri, Void, Void> {
 
+    /**
+     * This is called after the execute method is called.
+     * @param uri a variadic list of Uris
+     * @return nothing
+     */
     protected Void doInBackground(Uri ... uri) {
         sendRequest(uri[0]);
         return null;
     }
 
+    /**
+     * Sends a HTTP multiform request to a fixed server.
+     * @param uri THe uri of the file to be sent
+     */
     private void sendRequest(Uri uri) {
 
         File file = new File(uri.getPath());
