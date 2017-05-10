@@ -29,6 +29,11 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         super(context);
         cam = camera;
 
+        // camera focus is not on by default
+        Camera.Parameters params = camera.getParameters();
+        params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+        camera.setParameters(params);
+
         // Use Surface view for handling surface view changes
         holder = getHolder();
         holder.addCallback(this);
