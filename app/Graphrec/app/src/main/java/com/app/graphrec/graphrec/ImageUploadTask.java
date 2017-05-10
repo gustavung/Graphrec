@@ -23,6 +23,16 @@ import static android.content.ContentValues.TAG;
 
 public class ImageUploadTask extends AsyncTask<Uri, Void, Void> {
 
+    private String url;
+
+    /**
+     * Constructor used to pass auxiliary variables
+     * @param url The url to be posted to
+     */
+    ImageUploadTask(String url) {
+        this.url = url;
+    }
+
     /**
      * This is called after the execute method is called.
      * @param uri a variadic list of Uris
@@ -50,7 +60,7 @@ public class ImageUploadTask extends AsyncTask<Uri, Void, Void> {
                 .build();
 
         Request request = new Request.Builder()
-                .url("http://192.168.0.114:5000/upload")
+                .url(url)
                 .post(requestBody)
                 .build();
         try {

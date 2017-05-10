@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Graphrec</string>
-    <integer name="PORT">5000</integer>
+    <string name="default_text">Your graph was classified as: </string>
+    <string name="URL">http://192.168.0.114:5000/upload</string>
 </resources>
