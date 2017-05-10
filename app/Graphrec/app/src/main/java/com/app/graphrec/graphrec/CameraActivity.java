@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -42,6 +44,17 @@ public class CameraActivity extends Activity {
         FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
         preview.addView(camPreview);
 
+        final SurfaceOverlay overlay = (SurfaceOverlay) findViewById(R.id.overlay);
+        overlay.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (overlay.didButtonClick(event)) {
+                    invokeTakePicture();
+                }
+                return true;
+            }
+        });
+
     }
 
     /**
@@ -60,9 +73,8 @@ public class CameraActivity extends Activity {
 
     /**
      * Takes a picture from the camera preview.
-     * @param view The current view
      */
-    public void invokeTakePicture(View view) {
+    public void invokeTakePicture() {
         cam.takePicture(null, null, pictureCallback);
     }
 
