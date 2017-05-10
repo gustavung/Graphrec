@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Graphrec</string>
+    <integer name="PORT">5000</integer>
+</resources>
