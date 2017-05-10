@@ -1,7 +1,3 @@
-<<<<<<< 291a1aa7bdfee66b764049f7981987e0ce1eb011
-<<<<<<< 1b527569bc30033f9353b088da51634a20099492
-=======
->>>>>>> Added upload function and dummy evaluation
 import os, random
 from flask import Flask, request
 from werkzeug.utils import secure_filename
