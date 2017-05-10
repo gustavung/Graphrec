@@ -80,11 +80,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Sends a HTTP multiform request with payload etracted from Uri.
+     * Sends a HTTP multiform request with payload extracted from Uri.
      * @param uri The Uri to be used
      */
     public void sendRequest(Uri uri) {
-        new ImageUploadTask().execute(uri);
+        new ImageUploadTask(getResources().getString(R.string.URL)).execute(uri);
     }
 
 }
