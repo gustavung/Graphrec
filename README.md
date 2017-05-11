@@ -46,3 +46,49 @@ We are going to use [Flask's testing convention](http://flask.pocoo.org/docs/0.1
 #### Neural network
 To be decided.
 
+## Git guidelines
+In this project we have a protected master which means that commits can only be merged with pull requests. Generally we want to keep the master stable and develop on the frontend-dev and backend-dev branches instead. The point of this is to prevent either the backend or the frontend to break at any time while developing.
+
+### Your first commit
+Let us say that you have found a bug and want to fix it. Then you should first clone the project into your own development machine. Make sure that you fetch the master branch aswell as the development branches (frontend-dev, backend-dev). If you want to work on the backend then you must checkout to the backend-dev branch (or the analogue for frontend):
+
+```bash
+git checkout backend-dev
+```
+Then you can fix your bug either on this branch or a new branch:
+
+```bash
+git checkout -b newbranch
+```
+When you are done then you should check if either of the development branch is updated or the master branch. If any of the two branches are updated, then you must update them locally as well before pushing.
+
+```bash
+git fetch origin master
+git rebase origin/master master
+```
+Or the equivalent for any development branches you are working on. Now you should be able to push the development branch and make a pull request!
+
+```bash
+git push origin backend-dev
+```
+
+### Useful git commands
+
+ Getting an overview of the branches:
+
+ ```bash
+git log --graph --decorate --oneline --all
+ ```
+ Fixing X number of commits from HEAD (The current commit usually). This includes removing commits and squashing them:
+
+ ```bash
+ git rebase -i HEAD~X
+ ```
+
+Staging partial file changes:
+
+```bash
+git add -p .
+```
+
+If you are interested in learning more of git then check out: https://www.atlassian.com/git/tutorials
