@@ -10,6 +10,7 @@ import android.view.View;
 
 /**
  * An overlay view class to draw upon a surface view.
+ * @author gustav
  */
 public class SurfaceOverlay extends View {
     private Paint mPainter;

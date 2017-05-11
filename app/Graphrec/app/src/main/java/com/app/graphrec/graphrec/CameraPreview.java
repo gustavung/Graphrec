@@ -14,7 +14,9 @@ import java.io.IOException;
 
 import static android.content.ContentValues.TAG;
 
-/** A basic Camera preview class which is based on the drawable SurfaceView class*/
+/** A basic Camera preview class which is based on the drawable SurfaceView class
+ * @author gustav
+ */
 
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
     private SurfaceHolder holder;
