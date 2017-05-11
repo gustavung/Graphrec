@@ -22,6 +22,7 @@ import static android.content.ContentValues.TAG;
  * A custom camera activity using the old and deprecated camera API.
  * Should be rewritten for the new API if we target newer (android 5+, API 21+)
  * phones exclusively.
+ * @author gustav
  */
 
 public class CameraActivity extends Activity {
