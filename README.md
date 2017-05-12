@@ -40,7 +40,7 @@ Our overall testing strategy is to quickly deploy a minimum viable product, MVP,
 ### Components
 Testing of the individual components are tailored to suit those specific elements and their functionality.
 #### Android application
-To be decided.
+We are going to use android [Testing Support Library](https://developer.android.com/topic/libraries/testing-support-library/index.html) to aid us in testing. This includes general unit testing to test out the logic of out components. This library also includes Espresso and a UI automator which is used to test out UI.
 #### Server
 We are going to use [Flask's testing convention](http://flask.pocoo.org/docs/0.12/testing/) and python unit tests.
 #### Neural network
