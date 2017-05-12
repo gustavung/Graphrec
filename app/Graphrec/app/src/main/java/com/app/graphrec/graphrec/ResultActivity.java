@@ -35,11 +35,14 @@ public class ResultActivity extends Activity {
 
         // because of activity lifecycles...
         if (savedInstanceState == null) {
+            // FIXME: Doesn't seem to be able to update UI in this state
             sendRequestFromIntent(getIntent());
         }
 
-        TextView view = (TextView) findViewById(R.id.textView3);
+
+        TextView view = (TextView) findViewById(R.id.resultTextView);
         view.setText("Oh snap...");
+
     }
 
     /**
