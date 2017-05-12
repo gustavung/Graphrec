@@ -85,7 +85,7 @@ public class ImageUploadTask extends AsyncTask<Uri, Void, String> {
 
     @Override
     protected void onPostExecute(final String result) {
-        TextView view = (TextView) activity.findViewById(R.id.textView3);
+        TextView view = (TextView) activity.findViewById(R.id.resultTextView);
         view.setText(result);
     }
 
