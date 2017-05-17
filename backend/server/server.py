@@ -1,6 +1,7 @@
 import os, random
 from flask import Flask, request
 from werkzeug.utils import secure_filename
+from cn import evaluate as ev
 
 UPLOAD_FOLDER = os.path.join(os.path.join(os.getcwd(), '..'), 'images')
 print("Setting the upload folder to:", UPLOAD_FOLDER)
@@ -32,7 +33,7 @@ def upload_image():
 			return response
 		full_path = os.path.join(app.config['UPLOAD_FOLDER'], app.config['IMAGE_NAME'] + app.config['EXTENSION'])
 		f.save(full_path)
-		response = evaluate(f)
+		response = evaluate(full_path)
 
 	if os.path.isfile(full_path):
 		os.remove(full_path)
@@ -41,8 +42,9 @@ def upload_image():
 
 	return response
 
-def evaluate(image):
-	return random.choice(['Ascending linear function', 'Descending linear function'])
+def evaluate(image_path):
+	graph_type = ev(image_path)
+	return graph_type
 
 # Test with: curl --data-binary "@FILEPATH" localhost:5000/upload_stream
 @app.route('/upload_stream', methods=['GET', 'POST'])
@@ -57,7 +59,7 @@ def upload_image2():
 				if len(chunk) == 0:
 					break
 				f.write(chunk)
-			response = evaluate(f)
+		response = evaluate(full_path)
 
 	if os.path.isfile(full_path):
 		os.remove(full_path)
