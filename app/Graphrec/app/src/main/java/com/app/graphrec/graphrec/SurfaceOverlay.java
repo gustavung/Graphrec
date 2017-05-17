@@ -58,20 +58,30 @@ public class SurfaceOverlay extends View {
 
         int width = getWidth()/2;
         int height = getHeight();
+        // we use this to fix the rows
+        int pixelOffset = 10;
 
-        // not pixel perfect and probably not portable, fix please?
+        float buttonOffset = 150.0f;
+        float indicatorOffset = 200.0f;
+
+        float leftCornerX = width-indicatorOffset;
+        float leftCornerY = indicatorOffset;
+        float indicatorHeight = width;
+        float indicatorWidth = 2*indicatorOffset;
+
         float points[] = {
                 // p1(x,y) p2(x,y)
-                100, 100, width+10, 100, // line 1
-                width, 100, width-10, height-100, // line 2
-                width, height-100, 100-10, height-100, // line 3
-                100, height-100, 100+10, 100, // line 4
+                leftCornerX-pixelOffset, leftCornerY, leftCornerX+indicatorWidth+pixelOffset, leftCornerY, // line 1
+                leftCornerX+indicatorWidth, leftCornerY-pixelOffset, leftCornerX+indicatorWidth, leftCornerY+indicatorHeight+pixelOffset, // line 2
+                leftCornerX+indicatorWidth-pixelOffset, leftCornerY+indicatorHeight, leftCornerX-pixelOffset, leftCornerY+indicatorHeight, // line 3
+                leftCornerX, leftCornerY+indicatorHeight+pixelOffset, leftCornerX, leftCornerY-pixelOffset, // line 4
         };
+
 
         canvas.drawLines(points, mPainter);
 
-        canvas.drawCircle(1500.0f, 500.0f, 50.0f, mButtonInnerPainter);
-        canvas.drawCircle(1500.0f, 500.0f, 100.0f, mButtonOuterPainter);
+        canvas.drawCircle(width, height-buttonOffset, 50.0f, mButtonInnerPainter);
+        canvas.drawCircle(width, height-buttonOffset, 100.0f, mButtonOuterPainter);
     }
 
     /**
@@ -80,10 +90,13 @@ public class SurfaceOverlay extends View {
      * @return Whether the button was clicked or not
      */
     public boolean didButtonClick(MotionEvent event) {
+        int width = getWidth()/2;
+        int height = getHeight()-150;
+
         if (event.getAction() == MotionEvent.ACTION_UP) {
             performClick();
-            if (event.getX() < 1500.0f + 100.0f && event.getX() > 1500.0f - 100.0f
-                    && (event.getY() < 500.0f + 100.0f && event.getY() > 500.0f - 100.0f)) {
+            if (event.getX() < width + 100.0f && event.getX() > width - 100.0f
+                    && (event.getY() < height + 100.0f && event.getY() > height - 100.0f)) {
                 return true;
             }
         }

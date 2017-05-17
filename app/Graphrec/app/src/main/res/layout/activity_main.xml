@@ -38,5 +38,14 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true" />
 
+        <TextView
+            android:id="@+id/textViewStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/startButton"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:text="@string/startText" />
+
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

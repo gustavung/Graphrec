@@ -2,6 +2,9 @@ package com.app.graphrec.graphrec;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +13,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -39,8 +43,11 @@ public class CameraActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         // get the camera and relay it to the preview service
         cam = getCameraInstance();
+
         camPreview = new CameraPreview(this, cam);
         FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
         preview.addView(camPreview);
@@ -76,6 +83,7 @@ public class CameraActivity extends Activity {
      * Takes a picture from the camera preview.
      */
     public void invokeTakePicture() {
+        // according to the api this invocation will return a jpeg file and NOT a png file.
         cam.takePicture(null, null, pictureCallback);
     }
 
@@ -94,6 +102,24 @@ public class CameraActivity extends Activity {
             finish();
         }
     };
+    private byte[] proccessData(byte[] data) {
+
+        SurfaceOverlay overlay = (SurfaceOverlay) findViewById(R.id.overlay);
+        int width = overlay.getWidth()/2;
+        int indicatorOffset = 200;
+
+        int leftCornerX = width-indicatorOffset;
+        int leftCornerY = indicatorOffset;
+        int indicatorHeight = width;
+        int indicatorWidth = 2*leftCornerX;
+
+        Bitmap bmp= BitmapFactory.decodeByteArray(data,0,data.length);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        Bitmap dst = Bitmap.createBitmap(bmp, leftCornerX, leftCornerY, indicatorWidth, indicatorHeight);
+        dst.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        return stream.toByteArray();
+
+    }
 
     /**
      * Tries to create a new image file, which is stored in the private app storage, from a byte array.
@@ -108,7 +134,7 @@ public class CameraActivity extends Activity {
 
         try {
             FileOutputStream output = new FileOutputStream(tempFile.getAbsoluteFile());
-            output.write(data);
+            output.write(proccessData(data));
             output.close();
         } catch (FileNotFoundException e) {
             Log.d(TAG, "Error while opening temp file");

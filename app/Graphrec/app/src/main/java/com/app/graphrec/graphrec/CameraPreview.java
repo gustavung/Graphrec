@@ -1,9 +1,5 @@
 package com.app.graphrec.graphrec;
 
-/**
- * Created by gustav on 2017-05-04.
- */
-
 import android.content.Context;
 import android.hardware.Camera;
 import android.util.Log;
@@ -36,9 +32,14 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
         camera.setParameters(params);
 
+        // on the test device the camera was rotated 90 degrees
+        // might have to detect if this is true or not with other devices.
+        camera.setDisplayOrientation(90);
+
         // Use Surface view for handling surface view changes
         holder = getHolder();
         holder.addCallback(this);
+
     }
 
     /**

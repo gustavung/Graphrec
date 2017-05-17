@@ -3,4 +3,7 @@
     <string name="default_text">Your graph was classified as: </string>
     <string name="greeting_text">Press the button below to start classifying graphs!</string>
     <string name="URL">http://192.168.0.114:5000/upload</string>
+    <string name="startText">START</string>
+    <string name="newPicture">TAKE ANOTHER</string>
+
 </resources>

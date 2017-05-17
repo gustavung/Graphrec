@@ -46,5 +46,14 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true" />
 
+        <TextView
+            android:id="@+id/textViewLaunch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/launchCameraButton"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:text="@string/newPicture" />
+
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
