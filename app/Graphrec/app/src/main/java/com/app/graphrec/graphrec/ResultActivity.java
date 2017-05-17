@@ -41,7 +41,7 @@ public class ResultActivity extends Activity {
 
 
         TextView view = (TextView) findViewById(R.id.resultTextView);
-        view.setText("Oh snap...");
+        view.setText("Waiting for data...");
 
     }
 
