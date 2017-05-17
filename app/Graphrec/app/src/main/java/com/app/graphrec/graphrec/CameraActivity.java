@@ -111,11 +111,12 @@ public class CameraActivity extends Activity {
         int leftCornerX = width-indicatorOffset;
         int leftCornerY = indicatorOffset;
         int indicatorHeight = width;
-        int indicatorWidth = 2*leftCornerX;
+        int indicatorWidth = width;
 
         Bitmap bmp= BitmapFactory.decodeByteArray(data,0,data.length);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         Bitmap dst = Bitmap.createBitmap(bmp, leftCornerX, leftCornerY, indicatorWidth, indicatorHeight);
+        dst = Bitmap.createScaledBitmap(dst, 28, 28, false);
         dst.compress(Bitmap.CompressFormat.PNG, 100, stream);
         return stream.toByteArray();
 

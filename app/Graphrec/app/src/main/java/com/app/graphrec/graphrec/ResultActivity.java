@@ -45,6 +45,14 @@ public class ResultActivity extends Activity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        TextView view = (TextView) findViewById(R.id.resultTextView);
+        view.setText("Waiting for data...");
+
+    }
+
     /**
      * This is fired when startActivityForResult(Intent, int) is done.
      * @param requestCode Specifies who the result came from
