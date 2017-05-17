@@ -43,4 +43,3 @@ accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 print("accuracy:", accuracy)
 
 print(sess.run(accuracy, feed_dict={x: TEST_IMAGES, y_: TEST_LABELS})) # Calculate accuracy
-

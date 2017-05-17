@@ -14,7 +14,9 @@ import java.io.IOException;
 
 import static android.content.ContentValues.TAG;
 
-/** A basic Camera preview class which is based on the drawable SurfaceView class*/
+/** A basic Camera preview class which is based on the drawable SurfaceView class
+ * @author gustav
+ */
 
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
     private SurfaceHolder holder;
@@ -28,6 +30,11 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     public CameraPreview(Context context, Camera camera) {
         super(context);
         cam = camera;
+
+        // camera focus is not on by default
+        Camera.Parameters params = camera.getParameters();
+        params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+        camera.setParameters(params);
 
         // Use Surface view for handling surface view changes
         holder = getHolder();

@@ -1,18 +1,21 @@
 package com.app.graphrec.graphrec;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
 
 /**
- * The main activity class.
+ * The activity which represents the result view.
  * @author gustav
  */
 
-public class MainActivity extends AppCompatActivity {
+public class ResultActivity extends Activity {
 
     // Intent handles
     static final int CAMERA_ACTIVITY = 1;
@@ -24,8 +27,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_result);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        ImageButton imageBtn = (ImageButton) findViewById(R.id.launchCameraButton);
+        imageBtn.setImageResource(R.drawable.camera_button);
+
+        // because of activity lifecycles...
+        if (savedInstanceState == null) {
+            // FIXME: Doesn't seem to be able to update UI in this state
+            sendRequestFromIntent(getIntent());
+        }
+
+
+        TextView view = (TextView) findViewById(R.id.resultTextView);
+        view.setText("Oh snap...");
+
     }
 
     /**
@@ -38,9 +55,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAMERA_ACTIVITY && resultCode == RESULT_OK) {
-            Uri imageUri = Uri.parse(data.getStringExtra("picture"));
-            invokeResultActivity(imageUri);
+            sendRequestFromIntent(data);
         }
+    }
+
+    /**
+     * Sends a HTTP request with payload extracted from intent
+     * @param intent The intent to extract data from
+     */
+    private void sendRequestFromIntent(Intent intent) {
+        Uri imageUri = Uri.parse(intent.getStringExtra("picture"));
+        sendRequest(imageUri);
     }
 
     /**
@@ -52,12 +77,16 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, CAMERA_ACTIVITY);
     }
 
-    private void invokeResultActivity(Uri uri) {
-        Intent intent = new Intent(this, ResultActivity.class);
-        intent.putExtra("main", true);
-        intent.putExtra("picture", uri.toString());
-        setResult(RESULT_OK, intent);
-        startActivity(intent);
+    /**
+     * Sends a HTTP multiform request with payload extracted from Uri.
+     * @param uri The Uri to be used
+     */
+    public void sendRequest(Uri uri) {
+        // TODO: does not return anything on main view -> camera view -> result view, why?
+
+        // I can imagine that passing an entire activity to the async task is good...
+        new ImageUploadTask(getResources().getString(R.string.URL), this)
+                .execute(uri);
     }
 
 }

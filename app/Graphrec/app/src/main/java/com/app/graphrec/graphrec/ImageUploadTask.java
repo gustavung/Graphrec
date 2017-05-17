@@ -3,6 +3,7 @@ package com.app.graphrec.graphrec;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,27 +19,38 @@ import static android.content.ContentValues.TAG;
 
 /**
  * A class which is used to send HTTP requests on a different thread.
- *
+ * @author gustav
  */
 
-public class ImageUploadTask extends AsyncTask<Uri, Void, Void> {
+public class ImageUploadTask extends AsyncTask<Uri, Void, String> {
+
+    private String url;
+    private ResultActivity activity;
+
+    /**
+     * Constructor used to pass auxiliary variables
+     * @param url The url to be posted to
+     */
+    ImageUploadTask(String url, ResultActivity activity) {
+        this.activity = activity;
+        this.url = url;
+    }
 
     /**
      * This is called after the execute method is called.
      * @param uri a variadic list of Uris
      * @return nothing
      */
-    protected Void doInBackground(Uri ... uri) {
-        sendRequest(uri[0]);
-        return null;
+    protected String doInBackground(Uri ... uri) {
+        return sendRequest(uri[0]);
     }
 
     /**
      * Sends a HTTP multiform request to a fixed server.
      * @param uri THe uri of the file to be sent
      */
-    private void sendRequest(Uri uri) {
-
+    private String sendRequest(Uri uri) {
+        String result = null;
         File file = new File(uri.getPath());
         OkHttpClient client = new OkHttpClient();
 
@@ -50,7 +62,7 @@ public class ImageUploadTask extends AsyncTask<Uri, Void, Void> {
                 .build();
 
         Request request = new Request.Builder()
-                .url("http://192.168.0.114:5000/upload")
+                .url(url)
                 .post(requestBody)
                 .build();
         try {
@@ -58,7 +70,7 @@ public class ImageUploadTask extends AsyncTask<Uri, Void, Void> {
             if (!response.isSuccessful()) {
                 throw new IOException("Unexpected code " + response);
             }
-            System.out.println(response.body().string());
+            result = response.body().string();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -68,6 +80,13 @@ public class ImageUploadTask extends AsyncTask<Uri, Void, Void> {
             Log.d(TAG, "Error trying to delete temp file ");
         }
 
+        return result;
+    }
+
+    @Override
+    protected void onPostExecute(final String result) {
+        TextView view = (TextView) activity.findViewById(R.id.resultTextView);
+        view.setText(result);
     }
 
 }
