@@ -67,7 +67,7 @@ public class SurfaceOverlay extends View {
         float leftCornerX = width-indicatorOffset;
         float leftCornerY = indicatorOffset;
         float indicatorHeight = width;
-        float indicatorWidth = 2*indicatorOffset;
+        float indicatorWidth = width;
 
         float points[] = {
                 // p1(x,y) p2(x,y)
