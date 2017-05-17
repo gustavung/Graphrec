@@ -78,6 +78,9 @@ TEST_IMAGES = 100
 print("*********************************")
 print("Generating %s training images" %TRAINING_IMAGES )
 generate_images(TRAINING_IMAGES, 'training')
+# Reset indices
+ASC_INDEX = -1 # -1
+DESC_INDEX = -1 # -1
 print("*********************************")
 print("Generating %s test images" %TEST_IMAGES)
 generate_images(TEST_IMAGES, 'test')
